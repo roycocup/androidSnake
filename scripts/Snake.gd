@@ -78,7 +78,7 @@ func record_position():
 		tail.append(position)
 
 func grow_tail():
-	print(tail[0])
-	var snake = load('res://scenes/Snake.tscn').instance()
-	snake.position = tail[0]
-	$".".add_child(snake)
+	var node = load('res://scenes/SnakeElement.tscn').instance()
+	node.position = position 
+	$Pieces.add_child(node)
+	
