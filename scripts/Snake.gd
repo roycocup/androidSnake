@@ -1,39 +1,55 @@
 extends Node2D
 
+
 const DIR_UP = 'up'
 const DIR_DOWN = 'down'
 const DIR_LEFT = 'left'
 const DIR_RIGHT = 'right'
 
+
+var size = 21
 var step = 10
 var direction = null
 var counter = 0
 var move_interval = .5 
+var history = []
 var tail = []
+var tail_size = 5
+var init_pos = Vector2(429 / 2, 768 / 2)
 
 func _ready():
-	set_position(Vector2(429 / 2, 768 / 2))
+	$Block.rect_size = Vector2(size, size)
 	direction = get_random_dir()
+	set_position(init_pos)
+	#build_initial_tail()
 
 func _process(delta):
 	listen_to_direction()
 	listen_to_keys()
-	record_position()
-	move(delta)
-
-func move(delta):
 	counter = counter + delta
 	if counter >= move_interval:
 		counter = 0
-		if direction == DIR_UP:
-			position.y = position.y - step
-		if direction == DIR_DOWN:
-			position.y = position.y + step
-		if direction == DIR_LEFT:
-			position.x = position.x - step
-		if direction == DIR_RIGHT:
-			position.x = position.x + step
+		record_position()
+		move(delta)
+		move_tail(delta)
 
+func move(delta):
+	if direction == DIR_UP:
+		position.y = position.y - size
+	if direction == DIR_DOWN:
+		position.y = position.y + size
+	if direction == DIR_LEFT:
+		position.x = position.x - size
+	if direction == DIR_RIGHT:
+		position.x = position.x + size
+
+func move_tail(delta):
+	var i = 0
+	for element in tail:
+		var last_history_index = history.size()-1
+		element.position = history[last_history_index-i]
+		i += 1
+	
 func listen_to_keys():
 	if Input.is_action_just_pressed('ui_accept'):
 		grow_tail()
@@ -72,13 +88,15 @@ func set_position(pos):
 	position = pos
 
 func record_position():
-	if tail.size() > 0:
-		tail[0] = position
-	else:
-		tail.append(position)
+	history.append(position)
 
 func grow_tail():
-	var node = load('res://scenes/SnakeElement.tscn').instance()
-	node.position = position 
-	$Pieces.add_child(node)
+	var element = load('res://scenes/SnakeElement.tscn').instance()
+	var elements = get_node('/root/World/SnakeElements')
+	element.get_node('Block').color = Color('#cccccc')
+	element.position = Vector2(position.x, position.y-size)
+	elements.add_child(element)	
+	tail.append(element)
+	
+	
 	
