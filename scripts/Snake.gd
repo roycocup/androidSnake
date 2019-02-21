@@ -21,7 +21,6 @@ func _ready():
 	$Block.rect_size = Vector2(size, size)
 	direction = get_random_dir()
 	set_position(init_pos)
-	#build_initial_tail()
 
 func _process(delta):
 	listen_to_direction()
@@ -49,7 +48,7 @@ func move_tail(delta):
 		var last_history_index = history.size()-1
 		element.position = history[last_history_index-i]
 		i += 1
-	
+		
 func listen_to_keys():
 	if Input.is_action_just_pressed('ui_accept'):
 		grow_tail()
@@ -94,9 +93,10 @@ func grow_tail():
 	var element = load('res://scenes/SnakeElement.tscn').instance()
 	var elements = get_node('/root/World/SnakeElements')
 	element.get_node('Block').color = Color('#cccccc')
-	element.position = Vector2(position.x, position.y-size)
+	element.position = Vector2(position.x, position.y)
 	elements.add_child(element)	
 	tail.append(element)
-	
+	return element
+		
 	
 	
