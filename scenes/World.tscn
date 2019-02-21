@@ -24,4 +24,6 @@ editor/display_folded = true
 
 [node name="Menu" parent="." index="3" instance=ExtResource( 5 )]
 
+visible = false
+
 
