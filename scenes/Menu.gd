@@ -9,5 +9,6 @@ func position_me():
 	rect_position = Vector2(win_mid.x-mid_x, win_mid.y-mid_y)
 
 func _ready():
+	visible = false
 	position_me()
 	
