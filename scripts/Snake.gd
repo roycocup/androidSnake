@@ -97,6 +97,5 @@ func grow_tail():
 	elements.add_child(element)	
 	tail.append(element)
 	return element
-		
 	
 	

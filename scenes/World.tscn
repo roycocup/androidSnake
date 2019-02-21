@@ -7,7 +7,9 @@
 
 [node name="World" type="Node2D"]
 
+pause_mode = 2
 script = ExtResource( 1 )
+_sections_unfolded = [ "Pause" ]
 
 [node name="Grid" parent="." index="0" instance=ExtResource( 2 )]
 

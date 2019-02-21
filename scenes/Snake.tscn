@@ -4,7 +4,9 @@
 
 [node name="Snake" type="Node2D" index="0"]
 
+pause_mode = 1
 script = ExtResource( 1 )
+_sections_unfolded = [ "Pause" ]
 
 [node name="Block" type="ColorRect" parent="." index="0"]
 
